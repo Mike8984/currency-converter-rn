@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export const ConversionInput = ({ text, onPress, ...props }) => {
+export const ConversionInput = ({ text, onButtonPress, ...props }) => {
   const containerStyles = [styles.container]
 
   if (props.editable === false) {
@@ -48,7 +48,7 @@ export const ConversionInput = ({ text, onPress, ...props }) => {
 
   return (
     <View style={containerStyles}>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity style={styles.button} onPress={onButtonPress}>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
       <TextInput style={styles.input} {...props} />

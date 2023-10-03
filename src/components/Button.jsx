@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     }
 })
 
-export const Button = ({ text }) => {
+export const Button = ({ text, onPress }) => {
   return (
-    <TouchableOpacity style={styles.button}>
-      <Image style={styles.buttonIcon} source={require('../../assets/images/reverse.png')} />
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Image style={styles.buttonIcon} source={require('../assets/images/reverse.png')} />
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-// import OptionsScreen from './screens/OptionsScreen'
-import HomeScreen from './src/screens/HomeScreen'
+import Navigation from './src/config/Navigation'
 
-export default () => <HomeScreen />
+
+export default () => <Navigation />
