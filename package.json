@@ -7,7 +7,6 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
@@ -25,7 +24,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "eslint": "^7",
     "eslint-config-handlebarlabs": "^0.0.6"
   },
   "private": true
