@@ -1,4 +1,3 @@
-import React from 'react'
 import { ScrollView, View, Linking, Alert } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
 import colors from '../constants/colors'

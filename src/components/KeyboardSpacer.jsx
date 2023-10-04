@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Keyboard, View, Dimensions, Platform, StyleSheet } from 'react-native'
 
 export const KeyboardSpacer = ({ style, onToggle = () => null }) => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useContext } from 'react'
 import {
   View,
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native'
 import { format } from 'date-fns'
 import { Entypo } from '@expo/vector-icons'
@@ -17,20 +18,22 @@ import colors from '../constants/colors'
 import { ConversionInput } from '../components/ConversionInput'
 import { Button } from '../components/Button'
 import { KeyboardSpacer } from '../components/KeyboardSpacer'
+import { ConversionContext } from '../utils/ConversionContext'
 
 const screen = Dimensions.get('window')
 
 export default ({ navigation }) => {
-  const [baseCurrency, setBaseCurrency] = useState('USD')
-  const [quoteCurrency, setQuoteCurrency] = useState('GBP')
   const [value, setValue] = useState('100')
-  const conversionRate = 0.89824
-  const date = new Date()
+  const {
+    baseCurrency,
+    quoteCurrency,
+    swapCurrencies,
+    date,
+    rates,
+    isLoading,
+  } = useContext(ConversionContext)
 
-  const swapCurrencies = () => {
-    setBaseCurrency(quoteCurrency)
-    setQuoteCurrency(baseCurrency)
-  }
+  const conversionRate = rates[quoteCurrency]
 
   const [scrollEnabled, setScrollEnabled] = useState(false)
 
@@ -58,42 +61,49 @@ export default ({ navigation }) => {
             />
           </View>
           <Text style={styles.textHeader}>Currency Converter</Text>
-          <View style={styles.inputContainer}>
-            <ConversionInput
-              text={baseCurrency}
-              value={value}
-              onButtonPress={() =>
-                navigation.push('Currency List', {
-                  title: 'Base Currency',
-                  activeCurrency: baseCurrency,
-                  onChange: currency => setBaseCurrency(currency),
-                })
-              }
-              keyboardType="numeric"
-              onChangeText={text => setValue(text)}
-            />
-            <ConversionInput
-              text={quoteCurrency}
-              value={
-                value && `${(parseFloat(value) * conversionRate).toFixed(2)}`
-              }
-              editable={false}
-              onButtonPress={() =>
-                navigation.push('Currency List', {
-                  title: 'Quote Currency',
-                  activeCurrency: quoteCurrency,
-                  onChange: currency => setQuoteCurrency(currency),
-                })
-              }
-            />
-          </View>
-          <Text style={styles.text}>
-            {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${format(
-              new Date(date),
-              'MMM do, yyyy'
-            )}`}
-          </Text>
-          <Button text="Reverse Currencies" onPress={swapCurrencies} />
+          {isLoading ? (
+            <ActivityIndicator color={colors.white} size="large" />
+          ) : (
+            <>
+              <View style={styles.inputContainer}>
+                <ConversionInput
+                  text={baseCurrency}
+                  value={value}
+                  onButtonPress={() =>
+                    navigation.push('CurrencyList', {
+                      title: 'Base Currency',
+                      isBaseCurrency: true,
+                    })
+                  }
+                  keyboardType="numeric"
+                  onChangeText={text => setValue(text)}
+                />
+                <ConversionInput
+                  text={quoteCurrency}
+                  value={
+                    value &&
+                    `${(parseFloat(value) * conversionRate).toFixed(2)}`
+                  }
+                  editable={false}
+                  onButtonPress={() =>
+                    navigation.push('CurrencyList', {
+                      title: 'Quote Currency',
+                      isBaseCurrency: false,
+                    })
+                  }
+                />
+              </View>
+              <Text style={styles.text}>
+                {`1 ${baseCurrency} = ${conversionRate} ${quoteCurrency} as of ${
+                  date && format(new Date(date), 'MMM do, yyyy')
+                }`}
+              </Text>
+              <Button
+                text="Reverse Currencies"
+                onPress={() => swapCurrencies()}
+              />
+            </>
+          )}
           <KeyboardSpacer onToggle={visible => setScrollEnabled(visible)} />
         </View>
       </ScrollView>

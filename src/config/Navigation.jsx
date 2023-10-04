@@ -1,7 +1,7 @@
-import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { TouchableOpacity } from 'react-native'
+import { ConversionContextProvider } from '../utils/ConversionContext'
 import { Entypo } from '@expo/vector-icons'
 import HomeScreen from '../screens/HomeScreen'
 import OptionScreen from '../screens/OptionsScreen'
@@ -49,7 +49,8 @@ const ModalStackScreen = () => (
 
 export default () => (
   <NavigationContainer>
-    {/* <MainStackScreen /> */}
-    <ModalStackScreen />
+    <ConversionContextProvider>
+      <ModalStackScreen />
+    </ConversionContextProvider>
   </NavigationContainer>
 )
