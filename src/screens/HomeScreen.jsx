@@ -70,7 +70,7 @@ export default ({ navigation }) => {
                   text={baseCurrency}
                   value={value}
                   onButtonPress={() =>
-                    navigation.push('CurrencyList', {
+                    navigation.push('Currency List', {
                       title: 'Base Currency',
                       isBaseCurrency: true,
                     })
@@ -86,7 +86,7 @@ export default ({ navigation }) => {
                   }
                   editable={false}
                   onButtonPress={() =>
-                    navigation.push('CurrencyList', {
+                    navigation.push('Currency List', {
                       title: 'Quote Currency',
                       isBaseCurrency: false,
                     })
